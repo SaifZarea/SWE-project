@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام مكتبة بسيط</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-left: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        }
+
+        .books-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .books-section h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .book-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-author {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-year {
+            color: #888;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .book-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>نظام مكتبة بسيط</h1>
+            <p>إدارة مجموعة الكتب بسهولة وفعالية</p>
+        </div>
+
+        <div id="message" class="message hidden"></div>
+
+        <div class="form-section">
+            <h2 id="form-title">إضافة كتاب جديد</h2>
+            <form id="book-form">
+                <input type="hidden" id="book-id">
+                <div class="form-group">
+                    <label for="title">عنوان الكتاب:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="author">المؤلف:</label>
+                    <input type="text" id="author" name="author" required>
+                </div>
+                <div class="form-group">
+                    <label for="year">سنة النشر:</label>
+                    <input type="number" id="year" name="year" min="1000" max="2024" required>
+                </div>
+                <button type="submit" class="btn" id="submit-btn">إضافة الكتاب</button>
+                <button type="button" class="btn btn-secondary hidden" id="cancel-btn" onclick="cancelEdit()">إلغاء التعديل</button>
+            </form>
+        </div>
+
+        <div class="books-section">
+            <h2>قائمة الكتب</h2>
+            <div id="books-container" class="books-grid">
+                <!-- Books will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let editingBookId = null;
+
+        // Load books when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBooks();
+        });
+
+        // Handle form submission
+        document.getElementById('book-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+            const year = parseInt(document.getElementById('year').value);
+            
+            const bookData = {
+                title: title,
+                author: author,
+                year_published: year
+            };
+
+            if (editingBookId) {
+                updateBook(editingBookId, bookData);
+            } else {
+                addBook(bookData);
+            }
+        });
+
+        // Add new book
+        function addBook(bookData) {
+            fetch('/api/books', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bookData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                showMessage('تم إضافة الكتاب بنجاح!', 'success');
+                clearForm();
+                loadBooks();
+            })
+            .catch(error => {
+                showMessage('حدث خطأ أثناء إضافة الكتاب', 'error');
+                console.error('Error:', error);
+            });
+        }
+
+        // Load all books
+        function loadBooks() {
+            fetch('/api/books')
+            .then(response => response.json())
+            .then(data => {
+                displayBooks(data.books);
+            })
+            .catch(error => {
+                showMessage('حدث خطأ أثناء تحميل الكتب', 'error');
+                console.error('Error:', error);
+            });
+        }
+
+        // Display books in the grid
+        function displayBooks(books) {
+            const container = document.getElementById('books-container');
+            
+            if (books.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.2rem;">لا توجد كتب في المكتبة حالياً</p>';
+                return;
+            }
+
+            container.innerHTML = books.map(book => `
+                <div class="book-card">
+                    <div class="book-title">${book.title}</div>
+                    <div class="book-author">المؤلف: ${book.author}</div>
+                    <div class="book-year">سنة النشر: ${book.year_published}</div>
+                    <div class="book-actions">
+                        <button class="btn btn-secondary btn-small" onclick="editBook(${book.id}, '${book.title}', '${book.author}', ${book.year_published})">تعديل</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteBook(${book.id})">حذف</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Edit book
+        function editBook(id, title, author, year) {
+            editingBookId = id;
+            document.getElementById('book-id').value = id;
+            document.getElementById('title').value = title;
+            document.getElementById('author').value = author;
+            document.getElementById('year').value = year;
+            
+            document.getElementById('form-title').textContent = 'تعديل الكتاب';
+            document.getElementById('submit-btn').textContent = 'حفظ التعديل';
+            document.getElementById('cancel-btn').classList.remove('hidden');
+            
+            // Scroll to form
+            document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Update book
+        function updateBook(id, bookData) {
+            fetch(`/api/books/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bookData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                showMessage('تم تحديث الكتاب بنجاح!', 'success');
+                cancelEdit();
+                loadBooks();
+            })
+            .catch(error => {
+                showMessage('حدث خطأ أثناء تحديث الكتاب', 'error');
+                console.error('Error:', error);
+            });
+        }
+
+        // Delete book
+        function deleteBook(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الكتاب؟')) {
+                fetch(`/api/books/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    showMessage('تم حذف الكتاب بنجاح!', 'success');
+                    loadBooks();
+                })
+                .catch(error => {
+                    showMessage('حدث خطأ أثناء حذف الكتاب', 'error');
+                    console.error('Error:', error);
+                });
+            }
+        }
+
+        // Cancel edit mode
+        function cancelEdit() {
+            editingBookId = null;
+            clearForm();
+            document.getElementById('form-title').textContent = 'إضافة كتاب جديد';
+            document.getElementById('submit-btn').textContent = 'إضافة الكتاب';
+            document.getElementById('cancel-btn').classList.add('hidden');
+        }
+
+        // Clear form
+        function clearForm() {
+            document.getElementById('book-form').reset();
+            document.getElementById('book-id').value = '';
+        }
+
+        // Show message
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
+
